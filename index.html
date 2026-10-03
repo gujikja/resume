@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>개인정보 보호 담당자 지원 - 이력서 · 경력기술서 · 포트폴리오</title>
+  <style>
+    :root {
+      --primary: #1a365d;
+      --accent: #2b6cb0;
+      --light: #ebf8ff;
+      --border: #e2e8f0;
+      --text: #2d3748;
+      --muted: #718096;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--text);
+      line-height: 1.6;
+      background: #f7fafc;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #fff;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      padding: 36px 40px;
+      position: relative;
+    }
+    header h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    header .subtitle {
+      font-size: 1.05rem;
+      opacity: 0.95;
+      margin-bottom: 16px;
+    }
+    .contact-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 0.92rem;
+    }
+    .contact-info span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      margin-top: 12px;
+    }
+    nav.tabs {
+      display: flex;
+      background: #edf2f7;
+      border-bottom: 1px solid var(--border);
+    }
+    nav.tabs button {
+      flex: 1;
+      padding: 14px;
+      border: none;
+      background: transparent;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    nav.tabs button.active {
+      background: #fff;
+      color: var(--accent);
+      border-bottom: 3px solid var(--accent);
+    }
+    .section {
+      display: none;
+      padding: 36px 40px;
+    }
+    .section.active { display: block; }
+    h2 {
+      font-size: 1.25rem;
+      color: var(--primary);
+      border-left: 4px solid var(--accent);
+      padding-left: 12px;
+      margin-bottom: 20px;
+      margin-top: 28px;
+    }
+    h2:first-child { margin-top: 0; }
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 24px;
+      margin-bottom: 24px;
+    }
+    .profile-item {
+      display: flex;
+      gap: 8px;
+    }
+    .profile-item .label {
+      font-weight: 600;
+      color: var(--muted);
+      min-width: 90px;
+    }
+    .edu-card, .career-card, .cert-card, .project-card {
+      background: var(--light);
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+      border: 1px solid #bee3f8;
+    }
+    .career-card {
+      background: #f0fff4;
+      border-color: #9ae6b4;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+    .card-period {
+      font-size: 0.88rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .card-desc {
+      font-size: 0.93rem;
+      color: var(--text);
+    }
+    ul.skill-list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    ul.skill-list li {
+      background: #edf2f7;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+    .highlight {
+      background: #fefcbf;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .intro-box {
+      background: #fffaf0;
+      border-left: 4px solid #ed8936;
+      padding: 18px 20px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 24px;
+      font-size: 0.95rem;
+    }
+    .timeline {
+      position: relative;
+      padding-left: 24px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: #cbd5e0;
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -22px;
+      top: 8px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 640px) {
+      .profile-grid, .portfolio-grid { grid-template-columns: 1fr; }
+      header, .section { padding: 24px 20px; }
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+    .print-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(43,108,176,0.4);
+      z-index: 100;
+    }
+    @media print {
+      body { background: #fff; padding: 0; }
+      .container { box-shadow: none; }
+      nav.tabs, .print-btn { display: none !important; }
+      .section { display: block !important; page-break-inside: avoid; }
+      .section + .section { page-break-before: always; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>개인정보 보호 담당자 지원</h1>
+      <div class="subtitle">이력서 · 경력기술서 · 포트폴리오</div>
+      <div class="badge">정보처리기사 보유 · 정보통신설비 유지보수 관리자 · CCTV·정보보안·품질관리 전문</div>
+    </header>
+
+    <nav class="tabs">
+      <button class="active" onclick="showSection('resume')">이력서</button>
+      <button onclick="showSection('career')">경력기술서</button>
+      <button onclick="showSection('portfolio')">포트폴리오</button>
+    </nav>
+
+    <!-- ========== 이력서 ========== -->
+    <div id="resume" class="section active">
+      <h2>기본 정보</h2>
+      <div class="profile-grid">
+        <div class="profile-item"><span class="label">지원 직무</span><span>개인정보 보호 담당자 (정책·프로세스 / ISMS / 컴플라이언스)</span></div>
+        <div class="profile-item"><span class="label">자격증</span><span><span class="highlight">정보처리기사</span> (국가기술자격)</span></div>
+        <div class="profile-item"><span class="label">학력</span><span>대학교(4년) 졸업 (학점은행제)</span></div>
+        <div class="profile-item"><span class="label">총 경력</span><span>2년 9개월+ (현재 재직 중)</span></div>
+      </div>
+
+      <h2>학력</h2>
+      <div class="edu-card">
+        <div class="card-title">국가평생교육진흥원 학점은행제</div>
+        <div class="card-period">2002.01 ~ 2023.02 · 대학교(4년) 졸업</div>
+        <div class="card-desc">주전공 이수 · 학사학위 취득</div>
+      </div>
+
+      <h2>주요 경력</h2>
+      <div class="career-card">
+        <div class="card-title">글로벌자율주행시스템관안전ESG평가</div>
+        <div class="card-period">2024.01 ~ 현재 (재직중) · CEO / CTO</div>
+        <div class="card-desc">
+          · 조직 운영 및 기술 총괄 (CEO·COO·CTO 역할 수행)<br>
+          · 자율주행 시스템 안전·ESG 평가 관련 기술 및 운영 관리<br>
+          · IT 총무, 정보통신 설비 운용, 품질관리, 민원 응대 등 수행
+        </div>
+      </div>
+
+      <h2>자기소개 (요약)</h2>
+      <div class="intro-box">
+        정보처리기사 자격과 CCTV 보안 관제, 정보통신설비 운용·유지보수, 품질관리 경험을 바탕으로
+        <strong>개인정보보호 정책·프로세스 수립/개선/운영, ISMS 인증심사 대응, 컴플라이언스 업무</strong>에
+        성실히 임하고자 지원합니다.<br><br>
+        우대사항에 해당하는 CISSP/CPPG 자격이나 이커머스·글로벌 서비스 직접 경력은 없으나,
+        정보보호 관련 법령 이해, 사이버위협 대응 교육, 시스템 보안·품질관리 역량을 갖추고 있으며
+        주요 업무를 빠르게 학습하고 책임감 있게 수행하겠습니다.
+      </div>
+
+      <h2>핵심 역량 및 스킬</h2>
+      <ul class="skill-list">
+        <li>정보처리기사</li>
+        <li>개인정보보호 / 정보보안</li>
+        <li>CCTV 보안 관제</li>
+        <li>정보통신설비 운용·유지보수</li>
+        <li>품질관리 (S/W 품질)</li>
+        <li>JAVA 프로그래밍</li>
+        <li>AI · AIoT · 빅데이터</li>
+        <li>블록체인 네트워크 보안</li>
+        <li>ICT Manager</li>
+        <li>NCS 기반 정보통신 엔지니어</li>
+        <li>안전교육 이수</li>
+        <li>운전면허 · 유통관리사</li>
+      </ul>
+    </div>
+
+    <!-- ========== 경력기술서 ========== -->
+    <div id="career" class="section">
+      <h2>경력 기술서</h2>
+      <div class="intro-box">
+        본 경력기술서는 <strong>개인정보보호 정책 및 프로세스 수립·개선·운영 / ISMS 인증심사 대응 / 개인정보보호 컴플라이언스</strong> 직무 지원을 위해 작성되었습니다.<br><br>
+        우대사항(이커머스 개인정보보호 경력, 글로벌 컴플라이언스, CISSP·CPPG 자격)은 해당하지 않으나,
+        정보처리기사와 정보통신·보안 관련 교육·실무를 통해 자격요건(법령 이해, 정보보호 인증·위험평가 관련 기반)을 어느 정도 갖추고 있으며,
+        주요 업무를 성실히 학습·수행하겠다는 의지를 밝힙니다.
+      </div>
+
+      <h2>1. 현재 경력</h2>
+      <div class="career-card">
+        <div class="card-title">글로벌자율주행시스템관안전ESG평가</div>
+        <div class="card-period">2024.01 ~ 현재 · CEO / CTO (재직중)</div>
+        <div class="card-desc">
+          <strong>■ 주요 역할</strong><br>
+          · 조직의 CEO·COO·CTO 역할을 수행하며 기술 전략 및 운영 총괄<br>
+          · 자율주행 시스템 안전 평가 및 ESG 관련 기술·프로세스 관리<br>
+          · IT 인프라 및 정보통신 설비 전반의 운용·유지보수 감독<br><br>
+          <strong>■ 개인정보·보안 관련 기여 가능 역량</strong><br>
+          · CCTV 보안 관제 및 영상정보 처리 관련 실무 경험<br>
+          · 정보통신설비 성능점검·유지보수·품질관리를 통한 시스템 안정성 확보<br>
+          · 민원 응대 및 상주·심야 근무를 통한 현장 대응력<br>
+          · IT 총무 업무를 통한 내부 정보자산 관리 경험
+        </div>
+      </div>
+
+      <h2>2. 교육·자격·수료 경력 (타임라인)</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="card-title">정보통신설비유지보수관리자 수료</div>
+          <div class="card-period">2025.07 · ICT 폴리텍대학</div>
+          <div class="card-desc">정보통신설비유지보수관리자 인정교육 · 정보통신 고급 기술자 과정 이수</div>
+        </div>
+        <div class="timeline-item">
+          <div class="card-title">K-CTI 대한민국 사이버위협 침해사고대응 인텔리전스 컨퍼런스</div>
+          <div class="card-period">2025.04 · 데일리시큐</div>
+          <div class="card-desc">사이버 위협 대응 및 침해사고 인텔리전스 최신 동향 학습</div>
+        </div>
+        <div class="timeline-item">
+          <div class="card-title">[인공지능] AIoT를 이용한 빅데이터 분석 산업솔루션 개발</div>
+          <div class="card-period">2024.12 ~ 2025.04 · 삼성국민취업아카데미 (K-디지털 트레이닝)</div>
+          <div class="card-desc">AIoT 기반 빅데이터 분석 및 산업 솔루션 개발 실무 교육</div>
+        </div>
+        <div class="timeline-item">
+          <div class="card-title">블록체인 네트워크 보안을 적용한 AI서비스 기반 풀스택</div>
+          <div class="card-period">2024.09 ~ 2024.11 · 로봇플랫폼연구소</div>
+          <div class="card-desc">블록체인 보안 기술을 AI 서비스에 적용한 풀스택 개발 역량 강화</div>
+        </div>
+        <div class="timeline-item">
+          <div class="card-title">건설업 기초안전보건교육 이수</div>
+          <div class="card-period">2024.10 · (주)건설기초안전교육기관 한국안전보건교육원</div>
+          <div class="card-desc">산업안전보건법 제31조에 의한 건설업 기초안전교육 이수</div>
+        </div>
+        <div class="timeline-item">
+          <div class="card-title">S/W 품질 전문가</div>
+          <div class="card-period">2024.06 · 대전정보문화산업진흥원</div>
+          <div class="card-desc">실무 중심의 소프트웨어 테스트 기초 및 품질관리 교육</div>
+        </div>
+        <div class="timeline-item">
+          <div class="card-title">AI기반 데이터사이언티스트 자격취득과정</div>
+          <div class="card-period">2023.08 ~ 2023.12 · AI융합교육센터</div>
+          <div class="card-desc">데이터 분석·AI 기초 역량 및 자격 취득 과정 이수</div>
+        </div>
+      </div>
+
+      <h2>3. 보유 자격 및 핵심 역량 정리</h2>
+      <div class="edu-card">
+        <div class="card-desc">
+          <strong>● 국가기술자격</strong> : 정보처리기사<br>
+          <strong>● 전문 교육</strong> : 정보통신설비유지보수관리자, S/W 품질 전문가, AI·블록체인·AIoT 관련 과정<br>
+          <strong>● 실무 강점</strong> : CCTV 보안 관제 · 정보통신설비 운용/유지보수 · 품질관리 · 민원응대 · IT 총무<br>
+          <strong>● 근무 가능 형태</strong> : 상주근무 · 심야근무 · 민원 대응 가능<br>
+          <strong>● 추가 자격</strong> : 운전면허, 유통관리사, 안전교육 이수
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== 포트폴리오 ========== -->
+    <div id="portfolio" class="section">
+      <h2>포트폴리오 · 주요 성과 및 학습 프로젝트</h2>
+      <p style="margin-bottom:18px; color:var(--muted); font-size:0.93rem;">
+        개인정보 보호 및 정보보안 업무에 직접적으로 활용 가능한 교육·프로젝트 성과를 정리하였습니다.
+      </p>
+
+      <div class="portfolio-grid">
+        <div class="project-card">
+          <div class="card-title">정보통신설비 유지보수 관리</div>
+          <div class="card-period">2025.07 · ICT 폴리텍대학</div>
+          <div class="card-desc">
+            정보통신설비유지보수관리자 인정교육을 통해 설비 운용·성능점검·유지보수 체계를 학습.
+            개인정보처리시스템 및 보안설비의 안정적 운영 기반 역량 확보.
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="card-title">사이버위협 침해사고 대응</div>
+          <div class="card-period">2025.04 · K-CTI 컨퍼런스</div>
+          <div class="card-desc">
+            대한민국 사이버위협 침해사고대응 인텔리전스 컨퍼런스 참석.
+            최신 위협 동향과 대응 전략을 학습하여 개인정보 침해사고 대응 역량 강화.
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="card-title">AIoT 빅데이터 분석 솔루션</div>
+          <div class="card-period">2024.12 ~ 2025.04 · 삼성국민취업아카데미</div>
+          <div class="card-desc">
+            AIoT를 활용한 빅데이터 분석 산업솔루션 개발 과정 이수.
+            대용량 데이터 처리 시 개인정보 비식별화·보호 기술 적용 가능성 학습.
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="card-title">블록체인 보안 + AI 풀스택</div>
+          <div class="card-period">2024.09 ~ 2024.11 · 로봇플랫폼연구소</div>
+          <div class="card-desc">
+            블록체인 네트워크 보안을 AI 서비스에 적용한 풀스택 프로젝트.
+            데이터 무결성·접근통제 등 개인정보 보호에 필수적인 보안 아키텍처 이해.
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="card-title">S/W 품질 관리</div>
+          <div class="card-period">2024.06 · 대전정보문화산업진흥원</div>
+          <div class="card-desc">
+            실무 중심 소프트웨어 테스트 기초 및 품질관리 교육 이수.
+            개인정보처리시스템 품질 보증 및 보안성 검토 업무에 활용 가능.
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="card-title">AI 데이터사이언티스트 과정</div>
+          <div class="card-period">2023.08 ~ 2023.12 · AI융합교육센터</div>
+          <div class="card-desc">
+            AI 기반 데이터사이언티스트 자격취득과정 이수.
+            데이터 수집·분석 과정에서 발생하는 개인정보 이슈에 대한 기초 이해 확보.
+          </div>
+        </div>
+      </div>
+
+      <h2>CCTV · 정보통신 실무 역량 요약</h2>
+      <div class="career-card">
+        <div class="card-desc">
+          · <strong>CCTV 보안 관제</strong> : 영상정보 처리기기 운영 및 보안 관제 실무<br>
+          · <strong>정보통신설비 운용</strong> : 성능점검, 유지보수, 품질관리 전 과정 수행 가능<br>
+          · <strong>정보통신 선임</strong> : NCS 기반 정보통신엔지니어 역량 확인<br>
+          · <strong>JAVA 프로그래머 / 앱 개발</strong> : 시스템 개발·유지보수 지원 가능<br>
+          · <strong>ICT Manager</strong> : IT 총무 및 정보자산 관리 경험<br>
+          · <strong>근무 유연성</strong> : 상주근무, 심야근무, 민원응대 가능
+        </div>
+      </div>
+
+      <h2>개인정보 보호 담당자로서의 적합성 및 포부</h2>
+      <div class="intro-box">
+        <strong>■ 자격요건 관련</strong><br>
+        · 정보처리기사 및 정보통신·보안 교육을 통해 국내 개인정보보호법·정보통신망법 등 관련 법령의 기본 이해를 갖추고 있습니다.<br>
+        · K-CTI 사이버위협 침해사고대응 컨퍼런스 참석과 블록체인·AI 보안 교육을 통해 정보보호 인증심사·위험평가에 필요한 기초 역량을 쌓았습니다.<br>
+        · CCTV 보안 관제와 정보통신설비 유지보수·품질관리 경험은 개인정보처리시스템 및 영상정보처리기기의 기술적 보호조치 운영에 직접 도움이 됩니다.<br><br>
+        <strong>■ 우대사항 관련 솔직한 입장</strong><br>
+        CISSP/CPPG 자격, 이커머스 업종 개인정보보호 경력, 글로벌 서비스 컴플라이언스 경험은 아직 없습니다.
+        그러나 위 기반을 바탕으로 주요 업무(정책·프로세스 수립/개선/운영, ISMS 인증심사 대응, 컴플라이언스)를
+        빠르게 익히고 책임감 있게 수행하겠습니다. 부족한 부분은 적극적으로 학습하며 조직에 기여하는 인재가 되겠습니다.
+      </div>
+    </div>
+
+    <footer>
+      본 문서는 개인정보 보호 담당자 지원을 위해 작성된 이력서 · 경력기술서 · 포트폴리오입니다.
+    </footer>
+  </div>
+
+  <button class="print-btn" onclick="window.print()">PDF 저장 / 인쇄</button>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('nav.tabs button').forEach(b => b.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>
